@@ -10,20 +10,21 @@ def prepare_movies_data(movies, ratings):
     avg_rating_per_movie.columns = ['movieId', 'avg_rating', 'num_ratings', 'total_ratings']
     avg_rating_per_movie['movieId'] = avg_rating_per_movie['movieId'].astype(int)
     avg_rating_per_movie['emp_bayes_rating'] = (
-    ((avg_rating_per_movie['avg_rating'] * avg_rating_per_movie['num_ratings']) + (shrinkage_factor * avg_rating_scaled)) /
-    (avg_rating_per_movie['num_ratings'] + shrinkage_factor)
-)
+        ((avg_rating_per_movie['avg_rating'] * avg_rating_per_movie['num_ratings']) + (shrinkage_factor * avg_rating_scaled)) /
+        (avg_rating_per_movie['num_ratings'] + shrinkage_factor)
+    )
     avg_rating_per_movie['smoothed_rating'] = [
     row['emp_bayes_rating'] if row['avg_rating'] > avg_rating_scaled # if the movie has an above average rating => use emp bayes smoothing
     else row['avg_rating'] # if its below average just use that average
-    for ix, row in avg_rating_per_movie.iterrows()
-]
+        for ix, row in avg_rating_per_movie.iterrows()
+    ]
     movies = movies.merge(avg_rating_per_movie, on='movieId')
     movies['title_and_stats'] = (
-    movies['title']
-    + ' - rating:' + movies['smoothed_rating'].round(2).astype(str)
-    +  ' - num_ratings:' + movies['num_ratings'].astype(str)
-)
+        movies['title']
+        + ' - Rating: ' + (100 * movies['smoothed_rating']).round(0).astype(int).astype(str) + '%'
+    )
+    movies['year'] = movies.title.str.extract(r'\((\d{4})\)')
+    movies['genres_list'] = movies.genres.str.split('|')
     movies.to_csv('data/processed/movies.csv', index=False)
     return movies
 
@@ -59,11 +60,11 @@ def viz_rating_smoothing(movies):
 def extract_genres(movies):
     genres = movies.genres.str.split('|', expand=True)
     genres = (
-    genres.stack()
-    .reset_index(level=1, drop=True)
-    .value_counts()
-    .reset_index()
-)
+        genres.stack()
+        .reset_index(level=1, drop=True)
+        .value_counts()
+        .reset_index()
+    )
     genres.columns=['genre', 'count']
     genres.to_csv('data/processed/genres.csv')
 
