@@ -1,5 +1,9 @@
 # movie-finder
-Find a good movie to watch
+Find a good movie to watch.
+
+Access the deployed app here: https://movie-rex.streamlit.app/
+<img width="1282" alt="image" src="https://github.com/parker84/movie-finder/assets/12496987/0ecdac4d-ed00-4f19-8675-d0a1e763e2e5">
+
 
 ## Getting the Data
 You can download the data from [MovieLens here](https://grouplens.org/datasets/movielens/) (25M dataset)
