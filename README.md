@@ -1,7 +1,7 @@
 # movie-finder
-Find a good movie to watch.
+Choose some of your favourite movies and we'll find similar ones that you'll like. Enjoy! 🍿
 
-Access the deployed app here: https://movie-rex.streamlit.app/
+Access the app here: https://movie-rex.streamlit.app/
 <img width="1282" alt="image" src="https://github.com/parker84/movie-finder/assets/12496987/0ecdac4d-ed00-4f19-8675-d0a1e763e2e5">
 
 
